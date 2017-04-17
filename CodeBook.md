@@ -7,8 +7,8 @@ The dataset includes one file tidy_data.txt
 The columns and theid description are below:
 
 First two columns:
-	subject - subject who carried out the experiment
-	activity - activity performed by the subject
+- subject - subject who carried out the experiment
+- activity - activity performed by the subject
 
 Rest of the columns are feature selections: 
 
