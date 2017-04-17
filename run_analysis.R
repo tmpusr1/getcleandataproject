@@ -1,21 +1,3 @@
-## Data download and unzip 
-
-# string variables for file download
-fileName <- "UCIdata.zip"
-url <- "http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-dir <- "UCI HAR Dataset"
-
-# File download verification. If file does not exist, download to working directory.
-if(!file.exists(fileName)){
-        download.file(url,fileName, mode = "wb") 
-}
-
-# File unzip verification. If the directory does not exist, unzip the downloaded file.
-if(!file.exists(dir)){
-	unzip("UCIdata.zip", files = NULL, exdir=".")
-}
-
-
 ## Read Data
 subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
 subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
@@ -33,14 +15,14 @@ dataSet <- rbind(X_train,X_test)
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
 # Create a vector of only mean and std, use the vector to subset.
-MeanStdOnly <- grep("mean()|std()", features[, 2]) 
-dataSet <- dataSet[,MeanStdOnly]
+only_mean_n_std <- grep("mean()|std()", features[, 2]) 
+dataSet <- dataSet[,only_mean_n_std]
 
 
 # 4. Appropriately labels the data set with descriptive activity names.
 # Create vector of "Clean" feature names by getting rid of "()" apply to the dataSet to rename labels.
-CleanFeatureNames <- sapply(features[, 2], function(x) {gsub("[()]", "",x)})
-names(dataSet) <- CleanFeatureNames[MeanStdOnly]
+feature_names <- sapply(features[, 2], function(x) {gsub("[()]", "",x)})
+names(dataSet) <- feature_names[only_mean_n_std]
 
 # combine test and train of subject data and activity data, give descriptive lables
 subject <- rbind(subject_train, subject_test)
@@ -63,12 +45,11 @@ dataSet$activity <- act_group
 
 # check if reshape2 package is installed
 if (!"reshape2" %in% installed.packages()) {
-	install.packages("reshape2")
+        install.packages("reshape2")
 }
 library("reshape2")
 
 # melt data to tall skinny data and cast means. Finally write the tidy data to the working directory as "tidy_data.txt"
 baseData <- melt(dataSet,(id.vars=c("subject","activity")))
-secondDataSet <- dcast(baseData, subject + activity ~ variable, mean)
-names(secondDataSet)[-c(1:2)] <- paste("[mean of]" , names(secondDataSet)[-c(1:2)] )
-write.table(secondDataSet, "tidy_data.txt", sep = ",", row.name=FALSE)
+second_data_set <- dcast(baseData, subject + activity ~ variable, mean)
+write.table(second_data_set, "tidy_data.txt", sep = ",", row.name=FALSE)
