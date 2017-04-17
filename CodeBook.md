@@ -10,6 +10,15 @@ First two columns:
 - subject - subject who carried out the experiment
 - activity - activity performed by the subject
 
+Activity Labels
+
+- WALKING: subject was walking during the measurement
+- WALKING_UPSTAIRS: subject was walking up a staircase during the measurement
+- WALKING_DOWNSTAIRS: subject was walking down a staircase during the measurement
+- SITTING: subject was sitting during the measurement
+- STANDING: subject was standing during the measurement
+- LAYING: subject was laying down during the measurement
+
 Rest of the columns are feature selections: 
 
 Feature Selection 
