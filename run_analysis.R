@@ -1,3 +1,4 @@
+library("reshape2")
 ## Read Data
 subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
 subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
@@ -42,13 +43,6 @@ dataSet$activity <- act_group
 
 
 # 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
-
-# check if reshape2 package is installed
-if (!"reshape2" %in% installed.packages()) {
-        install.packages("reshape2")
-}
-library("reshape2")
-
 # melt data to tall skinny data and cast means. Finally write the tidy data to the working directory as "tidy_data.txt"
 baseData <- melt(dataSet,(id.vars=c("subject","activity")))
 second_data_set <- dcast(baseData, subject + activity ~ variable, mean)
