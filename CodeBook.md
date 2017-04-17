@@ -1,57 +1,188 @@
-This script will check if the data file is present in your working directory. (If not, will download and unzip the file)
+Code book:
+==========
 
-1. Read data and Merge
+The dataset includes one file tidy_data.txt
+============================================
 
-    subject_test : subject IDs for test
-    
-    subject_train : subject IDs for train
-    
-    X_test : values of variables in test
-    
-    X_train : values of variables in train
-    
-    y_test : activity ID in test
-    
-    y_train : activity ID in train
-    
-    activity_labels : Description of activity IDs in y_test and y_train
-    
-    features : description(label) of each variables in X_test and X_train
-    
-    dataSet : bind of X_train and X_test
+The columns and theid description are below:
 
-2. Extract only mean() and std()
+First two columns:
+	subject - subject who carried out the experiment
+	activity - activity performed by the subject
 
-    Create a vector of only mean and std labels, then use the vector to subset dataSet.
-    
-    MeanStdOnly : a vector of only mean and std labels extracted from 2nd column of features
-    
-    dataSet : at the end of this step, dataSet will only contain mean and std variables
+Rest of the columns are feature selections: 
 
-3. Changing Column label of dataSet
+Feature Selection 
+=================
 
-    Create a vector of "clean" feature names by getting rid of "()" at the end. Then, will apply that to the dataSet to rename column labels.
-    
-    CleanFeatureNames : a vector of "clean" feature names
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
-4. Adding Subject and Activity to the dataSet
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
 
-    Combine test data and train data of subject and activity, then give descriptive lables. Finally, bind with dataSet. At the end of this step, dataSet has 2 additonal columns 'subject' and 'activity' in the left side.
-    
-    subject : bind of subject_train and subject_test
-    
-    activity : bind of y_train and y_test
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
 
-5. Rename ID to activity name
+These signals were used to estimate variables of the feature vector for each pattern:  
 
-    Group the activity column of dataSet as "act_group", then rename each levels with 2nd column of activity_levels. Finally apply the renamed "act_group" to dataSet's activity column.
-    
-    act_group : factored activity column of dataSet
+- '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+- mean(): Mean value
+- std(): Standard deviation
 
-6. Output tidy data
+Accordingly below column names were derived:
 
-    In this part, dataSet is melted to create tidy data. It will also add [mean of] to each column labels for better description. Finally output the data as "tidy_data.txt"
-    
-    baseData : melted tall and skinny dataSet
-    
-    secondDataSet : casete baseData which has means of each variables
+tBodyAcc-mean-X
+
+tBodyAcc-mean-Y
+
+tBodyAcc-mean-Z
+
+tBodyAcc-std-X
+
+tBodyAcc-std-Y
+
+tBodyAcc-std-Z
+
+tGravityAcc-mean-X
+
+tGravityAcc-mean-Y
+
+tGravityAcc-mean-Z
+
+tGravityAcc-std-X
+
+tGravityAcc-std-Y
+
+tGravityAcc-std-Z
+
+tBodyAccJerk-mean-X
+
+tBodyAccJerk-mean-Y
+
+tBodyAccJerk-mean-Z
+
+tBodyAccJerk-std-X
+
+tBodyAccJerk-std-Y
+
+tBodyAccJerk-std-Z
+
+tBodyGyro-mean-X
+
+tBodyGyro-mean-Y
+
+tBodyGyro-mean-Z
+
+tBodyGyro-std-X
+
+tBodyGyro-std-Y
+
+tBodyGyro-std-Z
+
+tBodyGyroJerk-mean-X
+
+tBodyGyroJerk-mean-Y
+
+tBodyGyroJerk-mean-Z
+
+tBodyGyroJerk-std-X
+
+tBodyGyroJerk-std-Y
+
+tBodyGyroJerk-std-Z
+
+tBodyAccMag-mean
+
+tBodyAccMag-std
+
+tGravityAccMag-mean
+
+tGravityAccMag-std
+
+tBodyAccJerkMag-mean
+
+tBodyAccJerkMag-std
+
+tBodyGyroMag-mean
+
+tBodyGyroMag-std
+
+tBodyGyroJerkMag-mean
+
+tBodyGyroJerkMag-std
+
+fBodyAcc-mean-X
+
+fBodyAcc-mean-Y
+
+fBodyAcc-mean-Z
+
+fBodyAcc-std-X
+
+fBodyAcc-std-Y
+
+fBodyAcc-std-Z
+
+fBodyAcc-meanFreq-X
+
+fBodyAcc-meanFreq-Y
+
+fBodyAcc-meanFreq-Z
+
+fBodyAccJerk-mean-X
+
+fBodyAccJerk-mean-Y
+
+fBodyAccJerk-mean-Z
+
+fBodyAccJerk-std-X
+
+fBodyAccJerk-std-Y
+
+fBodyAccJerk-std-Z
+
+fBodyAccJerk-meanFreq-X
+
+fBodyAccJerk-meanFreq-Y
+
+fBodyAccJerk-meanFreq-Z
+
+fBodyGyro-mean-X
+
+fBodyGyro-mean-Y
+
+fBodyGyro-mean-Z
+
+fBodyGyro-std-X
+
+fBodyGyro-std-Y
+
+fBodyGyro-std-Z
+
+fBodyGyro-meanFreq-X
+
+fBodyGyro-meanFreq-Y
+
+fBodyGyro-meanFreq-Z
+
+fBodyAccMag-mean
+
+fBodyAccMag-std
+
+fBodyAccMag-meanFreq
+
+fBodyBodyAccJerkMag-mean
+
+fBodyBodyAccJerkMag-std
+
+fBodyBodyAccJerkMag-meanFreq
+
+fBodyBodyGyroMag-mean
+
+fBodyBodyGyroMag-std
+
+fBodyBodyGyroMag-meanFreq
+
+fBodyBodyGyroJerkMag-mean
+
+fBodyBodyGyroJerkMag-std
+
+fBodyBodyGyroJerkMag-meanFreq
